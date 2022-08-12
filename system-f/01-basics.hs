@@ -20,6 +20,12 @@ ifTrueElseSomething2 = \i -> (\x -> if i then True else x)
 ifTrueElseFlip :: Bool -> (Bool -> Bool)
 ifTrueElseFlip = \i -> if i then id else not
 
+-- Haskell compiler is smart, and it only allows single return type
+ifTrueElseChar = \i -> \x -> if i then 'a' else x
+-- !!!
+-- ifTrueElseChar :: Bool -> Char -> Char
+-- !!!
+
 -- Syntaxic Sugar for Function
 ifTrueElseSomething3 :: Bool -> Bool -> Bool
 ifTrueElseSomething3 = \i x -> if i then True else x
