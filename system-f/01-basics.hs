@@ -17,12 +17,20 @@ ifTrueElseSomething2 :: Bool -> (Bool -> Bool)
 ifTrueElseSomething2 = \i -> (\x -> if i then True else x)
 
 -- not :: Bool -> Bool
+-- id :: a -> a
 ifTrueElseFlip :: Bool -> (Bool -> Bool)
 ifTrueElseFlip = \i -> if i then id else not
+{-
+  func = ifTrueElseFlip True
+  res = func False
+
+  res2 = ifTrueElseFlip True False
+-}
 
 -- Haskell compiler is smart, and it only allows single return type
 ifTrueElseChar = \i -> \x -> if i then 'a' else x
 -- !!!
+-- x will be inferred as a Char
 -- ifTrueElseChar :: Bool -> Char -> Char
 -- !!!
 
@@ -37,9 +45,13 @@ ifTrueElseSomething4 i x = if i then True else x
 three = 1 + 2
 three2 = (+) 1 2
 
-(.+.) x y = show (x + y)
-myPlus = 2 .+. 2
+(.+.) :: Int -> Int -> String
+(.+.) x y = 
+  show (x + y)
 
-fn x y = x + y + 1
+myPlusRes = 2 .+. 2
 
-fnRes = x `fn` y
+fn x y = 
+  x + y + 1
+
+fnRes = 1 `fn` 2
