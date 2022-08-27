@@ -9,11 +9,11 @@ isDivisible a b = isInt (a / b)
 
 isLeapYear :: Integer -> Bool
 isLeapYear year = 
-  if isDivisible year 4 then 
-    if isDivisible year 400 then 
-      True 
+  if isInt (year / 4) then 
+    if isInt (year / 400) then 
+      True
     else 
-      if isDivisible year 100 then False else True 
+      if isInt (year / 100) then False else True 
   else 
     False
 
