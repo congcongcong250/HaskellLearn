@@ -40,3 +40,34 @@ data List t =
 -}
 
 infixr 5 :.
+
+-- Helper: foldRight, foldLeft
+-- functions over List that you may consider using
+foldRight :: (a -> b -> b) -> b -> List a -> b
+foldRight _ b Nil      = b
+foldRight f b (h :. t) = f h (foldRight f b t)
+
+
+foldLeft :: (b -> a -> b) -> b -> List a -> b
+foldLeft _ b Nil      = b
+foldLeft f b (h :. t) = let b' = f b h in b' `seq` foldLeft f b' t
+
+-- Transform our CUSTOM List in to a Haskell list 
+-- by re-appending elements with `:`
+hlist ::
+  List a
+  -> [a]
+hlist =
+  foldRight (:) []
+
+{-
+  Implements an instance of Show type class, using hlist
+  
+  show = show . hlist
+  show l = show (hlist l)
+
+  Ref:
+  - https://stackoverflow.com/questions/631284/dot-operator-in-haskell-need-more-explanation
+-}
+instance Show t => Show (List t) where
+  show = show . hlist
