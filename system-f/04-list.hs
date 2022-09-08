@@ -71,3 +71,18 @@ hlist =
 -}
 instance Show t => Show (List t) where
   show = show . hlist
+
+-- | Returns the head of the list or the given default.
+--
+-- >>> headOr 3 (1 :. 2 :. Nil)
+-- 1
+--
+-- >>> headOr 3 Nil
+-- 3
+--
+-- prop> \x -> x `headOr` infinity == 0
+--
+-- prop> \x -> x `headOr` Nil == x
+headOr :: a -> List a -> a
+headOr a Nil = a
+headOr _ (h :. t) = h
