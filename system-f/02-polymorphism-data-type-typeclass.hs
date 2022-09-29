@@ -1,6 +1,17 @@
--- Prelude is imported implicitly for every file
+-- By default, Prelude is imported implicitly for every file
 -- it contains Show, Int, String, etc
 -- import Prelude
+
+-- :set -XNoImplicitPrelude
+-- :set -XScopedTypeVariables
+-- :set -XOverloadedStrings
+-- :set -XRebindableSyntax
+
+-- Tho, given the above ghci setting in ./.ghci
+-- We are required to import these module explicitly
+import Prelude
+import Data.String
+-- `import qualified Prelude` means every usage need to be `Prelude.show`
 
 -- Data type
 {-

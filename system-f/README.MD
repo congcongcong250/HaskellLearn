@@ -2,6 +2,8 @@
 
 [system-f](https://github.com/system-f/fp-course)
 
+[Youtube Tutorial](https://www.youtube.com/watch?v=NzIZzvbplSM&list=PLly9WMAVMrayYo2c-1E_rIRwBXG_FbLBW)
+
 ## GHCi Utils
 
 ```

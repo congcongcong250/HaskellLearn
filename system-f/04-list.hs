@@ -1,3 +1,5 @@
+import Course.Optional
+import Prelude
 {-
   Define a CUSTOM list type
   - We want a `Cons`
