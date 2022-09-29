@@ -51,20 +51,20 @@ bindOptional _ Empty =
 bindOptional f (Full a) =
   f a
 
--- | Return the possible value if it exists; otherwise, the second argument.
+-- | Return the possible value if it exists; otherwise, the first argument.
 --
--- >>> Full 8 ?? 99
+-- >>> fullOr 99 (Full 8)
 -- 8
 --
--- >>> Empty ?? 99
+-- >>> fullOr 99 Empty
 -- 99
-(??) ::
-  Optional a
-  -> a
-  -> a
-Empty ?? a =
+fullOr ::
   a
-Full a ?? _ =
+  -> Optional a
+  -> a
+fullOr a Empty =
+  a
+fullOr _ (Full a) =
   a
 
 -- | Try the first optional for a value. If it has a value, use it; otherwise,

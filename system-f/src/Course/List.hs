@@ -1,7 +1,8 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 
 -- + Complete the 10 exercises below by filling out the function bodies.
 --   Replace the function bodies (error "todo: ...") with an appropriate
@@ -16,7 +17,6 @@ module Course.List where
 import qualified Control.Applicative as A
 import qualified Control.Monad as M
 import Course.Core
-import Course.Optional
 import Course.Optional
 import qualified System.Environment as E
 import qualified Prelude as P
@@ -230,7 +230,7 @@ flattenAgain =
 -- when the list contains one or more `Empty` values.
 --
 -- >>> seqOptional (Full 1 :. Full 10 :. Nil)
--- Full [1,10]
+-- Full [1, 10]
 --
 -- >>> seqOptional Nil
 -- Full []
@@ -329,7 +329,7 @@ produce f x = x :. produce f (f x)
 -- >>> notReverse Nil
 -- []
 --
--- prop> \x -> let types = x :: List Int in notReverse x ++ notReverse y == notReverse (y ++ x)
+-- prop> \x y -> let types = x :: List Int in notReverse x ++ notReverse y == notReverse (y ++ x)
 --
 -- prop> \x -> let types = x :: Int in notReverse (x :. Nil) == x :. Nil
 notReverse ::
@@ -543,9 +543,9 @@ unfoldr ::
   (a -> Optional (b, a))
   -> a
   -> List b
-unfoldr f b  =
-  case f b of
-    Full (a, z) -> a :. unfoldr f z
+unfoldr f a  =
+  case f a of
+    Full (b, a') -> b :. unfoldr f a'
     Empty -> Nil
 
 lines ::
@@ -734,7 +734,8 @@ readFloat ::
 readFloat =
   mapOptional fst . readFloats
 
-instance IsString (List Char) where
+instance (a ~ Char) => IsString (List a) where
+  -- Per https://hackage.haskell.org/package/base-4.14.1.0/docs/src/Data.String.html#line-43
   fromString =
     listh
 
@@ -776,5 +777,3 @@ instance A.Applicative List where
 instance P.Monad List where
   (>>=) =
     flip flatMap
-  return =
-    (:. Nil)
